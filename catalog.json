@@ -3712,6 +3712,20 @@
       "avatar_path": "./img/avatars/Alice.png"
     },
     {
+      "id": 322,
+      "hero": "Alice",
+      "skin_name": "The Butterfly Mansion Girl",
+      "tag": "Bậc A",
+      "tier_folder": "3_Bậc S+",
+      "tier_name": "Bậc S+",
+      "subfolder": "ưu tiên 1",
+      "priority": 1,
+      "filename": "Alice_ The Butterfly Mansion Girl_ Bậc A.png",
+      "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 1/Alice_ The Butterfly Mansion Girl_ Bậc A.png",
+      "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%201/Alice_%20The%20Butterfly%20Mansion%20Girl_%20B%E1%BA%ADc%20A.png",
+      "avatar_path": "./img/avatars/Alice.png"
+    },
+    {
       "id": 221,
       "hero": "Annette",
       "skin_name": "Thần tượng âm nhạc",
@@ -3961,6 +3975,20 @@
       "filename": "Enzo_ Kurapika_ Bậc S+ Hữu hạn.png",
       "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 1/Enzo_ Kurapika_ Bậc S+ Hữu hạn.png",
       "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%201/Enzo_%20Kurapika_%20B%E1%BA%ADc%20S%2B%20H%E1%BB%AFu%20h%E1%BA%A1n.png",
+      "avatar_path": "./img/avatars/Enzo.png"
+    },
+    {
+      "id": 370,
+      "hero": "Enzo",
+      "skin_name": "Sát quỷ đoàn",
+      "tag": "Bậc A",
+      "tier_folder": "3_Bậc S+",
+      "tier_name": "Bậc S+",
+      "subfolder": "ưu tiên 1",
+      "priority": 1,
+      "filename": "Enzo_ Sát quỷ đoàn_ Bậc A.png",
+      "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 1/Enzo_ Sát quỷ đoàn_ Bậc A.png",
+      "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%201/Enzo_%20S%C3%A1t%20qu%E1%BB%B7%20%C4%91o%C3%A0n_%20B%E1%BA%ADc%20A.png",
       "avatar_path": "./img/avatars/Enzo.png"
     },
     {
@@ -4916,20 +4944,6 @@
       "avatar_path": "./img/avatars/Zuka.png"
     },
     {
-      "id": 322,
-      "hero": "Alice",
-      "skin_name": "The Butterfly Mansion Girl",
-      "tag": "Bậc A",
-      "tier_folder": "3_Bậc S+",
-      "tier_name": "Bậc S+",
-      "subfolder": "ưu tiên 2",
-      "priority": 2,
-      "filename": "Alice_ The Butterfly Mansion Girl_ Bậc A.png",
-      "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 2/Alice_ The Butterfly Mansion Girl_ Bậc A.png",
-      "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%202/Alice_%20The%20Butterfly%20Mansion%20Girl_%20B%E1%BA%ADc%20A.png",
-      "avatar_path": "./img/avatars/Alice.png"
-    },
-    {
       "id": 324,
       "hero": "Alice",
       "skin_name": "Tiểu tiên tử",
@@ -4984,20 +4998,6 @@
       "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 2/Aya_ Hỏa Hồ Tiên Ngư_ Bậc S+.png",
       "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%202/Aya_%20H%E1%BB%8Fa%20H%E1%BB%93%20Ti%C3%AAn%20Ng%C6%B0_%20B%E1%BA%ADc%20S%2B.png",
       "avatar_path": "./img/avatars/Aya.png"
-    },
-    {
-      "id": 370,
-      "hero": "Enzo",
-      "skin_name": "Sát quỷ đoàn",
-      "tag": "Bậc A",
-      "tier_folder": "3_Bậc S+",
-      "tier_name": "Bậc S+",
-      "subfolder": "ưu tiên 2",
-      "priority": 2,
-      "filename": "Enzo_ Sát quỷ đoàn_ Bậc A.png",
-      "rel_path": "Xếp theo bậc/3_Bậc S+/ưu tiên 2/Enzo_ Sát quỷ đoàn_ Bậc A.png",
-      "web_path": "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/%C6%B0u%20ti%C3%AAn%202/Enzo_%20S%C3%A1t%20qu%E1%BB%B7%20%C4%91o%C3%A0n_%20B%E1%BA%ADc%20A.png",
-      "avatar_path": "./img/avatars/Enzo.png"
     },
     {
       "id": 387,
