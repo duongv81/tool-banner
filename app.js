@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bannerCols: 15,
     bannerSlots: [],          // Array of slot objects representing the banner grid
     profileLayout: 'big_2x2', // Default: 'big_2x2' | 'standard' | 'wide_2x1'
-    sortMode: 'smart',        // Default: 'smart' | 'hero' | 'theme' | 'tier'
+    sortMode: 'tier',        // Default: 'tier' | 'smart' | 'hero' | 'theme'
     zoomCardW: 160,           // Preview zoom width (120, 160, 195, 230)
     activeTab: 'tab-crop',
     excludeTiers: {
