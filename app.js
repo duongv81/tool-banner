@@ -80,6 +80,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (!res.ok) throw new Error('Không thể tải catalog skin');
       const data = await res.json();
+
+      // Chuẩn hóa toàn bộ web_path sang đường dẫn tương đối (./skins/...) để tương thích GitHub Pages
+      const fixWebPath = (p) => (typeof p === 'string' && p.startsWith('/skins/')) ? ('.' + p) : p;
+      if (Array.isArray(data.skins)) {
+        data.skins.forEach(s => { s.web_path = fixWebPath(s.web_path); });
+      }
+      if (data.matrix) {
+        Object.keys(data.matrix).forEach(tierKey => {
+          const tierObj = data.matrix[tierKey];
+          Object.keys(tierObj).forEach(heroKey => {
+            const list = tierObj[heroKey];
+            if (Array.isArray(list)) {
+              list.forEach(s => { s.web_path = fixWebPath(s.web_path); });
+            }
+          });
+        });
+      }
+      if (Array.isArray(data.heroes)) {
+        data.heroes.forEach(h => {
+          h.avatar = fixWebPath(h.avatar);
+        });
+      }
+
       state.catalog = data;
       console.log("[Data Loaded]", data);
 
