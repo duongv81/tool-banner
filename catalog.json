@@ -707,15 +707,15 @@
                                                                  {
                                                                      "id":  3,
                                                                      "hero":  "Annette",
-                                                                     "skin_name":  "Nữ Quản ga",
+                                                                     "skin_name":  "Nữ sinh Trung học",
                                                                      "tag":  "Bleach",
                                                                      "theme":  "Bleach",
                                                                      "tier_folder":  "1_Bậc SSS \u0026 SSS+",
                                                                      "tier_name":  "Bậc SSS \u0026 SSS+",
                                                                      "subfolder":  "",
-                                                                     "filename":  "Annette_ Nữ Quản ga_ Bleach.png",
-                                                                     "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Annette_ Nữ Quản ga_ Bleach.png",
-                                                                     "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Annette_%20N%E1%BB%AF%20Qu%E1%BA%A3n%20ga_%20Bleach.png"
+                                                                     "filename":  "Annette_ Nữ sinh trung học_ Bleach.png",
+                                                                     "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Annette_ Nữ sinh trung học_ Bleach.png",
+                                                                     "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Annette_%20N%E1%BB%AF%20sinh%20trung%20h%E1%BB%8Dc_%20Bleach.png"
                                                                  }
                                                              ],
                                                  "Aoi":  [
@@ -1359,15 +1359,15 @@
                                                                 {
                                                                     "id":  48,
                                                                     "hero":  "Violet",
-                                                                    "skin_name":  "Thứ nguyên vệ thần",
+                                                                    "skin_name":  "Vọng Nguyệt Long Cơ",
                                                                     "tag":  "Bậc SSS Hữu hạn",
                                                                     "theme":  "Thứ Nguyên Vệ Thần",
                                                                     "tier_folder":  "1_Bậc SSS \u0026 SSS+",
                                                                     "tier_name":  "Bậc SSS \u0026 SSS+",
                                                                     "subfolder":  "",
-                                                                    "filename":  "Violet_ Thứ nguyên vệ thần_ Bậc SSS Hữu hạn.png",
-                                                                    "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Violet_ Thứ nguyên vệ thần_ Bậc SSS Hữu hạn.png",
-                                                                    "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Violet_%20Th%E1%BB%A9%20nguy%C3%AAn%20v%E1%BB%87%20th%E1%BA%A7n_%20B%E1%BA%ADc%20SSS%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
+                                                                    "filename":  "Violet_ Vọng Nguyệt Long Cơ_ Bậc SSS Hữu hạn.png",
+                                                                    "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Violet_ Vọng Nguyệt Long Cơ_ Bậc SSS Hữu hạn.png",
+                                                                    "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Violet_%20V%E1%BB%8Dng%20Nguy%E1%BB%87t%20Long%20C%C6%A1_%20B%E1%BA%ADc%20SSS%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
                                                                 },
                                                                 {
                                                                     "id":  49,
@@ -3383,15 +3383,15 @@
                                                               {
                                                                   "id":  193,
                                                                   "hero":  "Violet",
-                                                                  "skin_name":  "Nữ Đặc Cảnh",
+                                                                  "skin_name":  "ECHO",
                                                                   "tag":  "ECHO",
                                                                   "theme":  null,
                                                                   "tier_folder":  "2_Bậc SS \u0026 SS+",
                                                                   "tier_name":  "Bậc SS \u0026 SS+",
                                                                   "subfolder":  "",
-                                                                  "filename":  "Violet_ Nữ Đặc Cảnh_ ECHO.png",
-                                                                  "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Nữ Đặc Cảnh_ ECHO.png",
-                                                                  "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20N%E1%BB%AF%20%C4%90%E1%BA%B7c%20C%E1%BA%A3nh_%20ECHO.png"
+                                                                  "filename":  "Violet_ ECHO.png",
+                                                                  "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ ECHO.png",
+                                                                  "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20ECHO.png"
                                                               },
                                                               {
                                                                   "id":  194,
@@ -3409,15 +3409,15 @@
                                                               {
                                                                   "id":  195,
                                                                   "hero":  "Violet",
-                                                                  "skin_name":  "Pháo hoa Neon tuyệt sắc",
+                                                                  "skin_name":  "Thần Long tỷ tỷ",
                                                                   "tag":  "Bậc SS",
                                                                   "theme":  null,
                                                                   "tier_folder":  "2_Bậc SS \u0026 SS+",
                                                                   "tier_name":  "Bậc SS \u0026 SS+",
                                                                   "subfolder":  "",
-                                                                  "filename":  "Violet_ Pháo hoa Neon tuyệt sắc_ Bậc SS.png",
-                                                                  "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Pháo hoa Neon tuyệt sắc_ Bậc SS.png",
-                                                                  "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20Ph%C3%A1o%20hoa%20Neon%20tuy%E1%BB%87t%20s%E1%BA%AFc_%20B%E1%BA%ADc%20SS.png"
+                                                                  "filename":  "Violet_ Thần long tỷ tỷ_Bậc SS.png",
+                                                                  "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Thần long tỷ tỷ_Bậc SS.png",
+                                                                  "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20Th%E1%BA%A7n%20long%20t%E1%BB%B7%20t%E1%BB%B7_B%E1%BA%ADc%20SS.png"
                                                               },
                                                               {
                                                                   "id":  196,
@@ -7235,15 +7235,15 @@
                                                    {
                                                        "id":  471,
                                                        "hero":  "Violet",
-                                                       "skin_name":  "Lính đánh thuê",
-                                                       "tag":  "Bậc S+",
+                                                       "skin_name":  "DJ cầu hồn",
+                                                       "tag":  "Bậc S+ Hữu hạn",
                                                        "theme":  null,
                                                        "tier_folder":  "3_Bậc S+",
                                                        "tier_name":  "Bậc S+",
                                                        "subfolder":  "",
-                                                       "filename":  "Violet_ Lính đánh thuê_ Bậc S+.png",
-                                                       "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Lính đánh thuê_ Bậc S+.png",
-                                                       "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20L%C3%ADnh%20%C4%91%C3%A1nh%20thu%C3%AA_%20B%E1%BA%ADc%20S%2B.png"
+                                                       "filename":  "Violet_ DJ cầu hồn_ Bậc S+ Hữu hạn.png",
+                                                       "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ DJ cầu hồn_ Bậc S+ Hữu hạn.png",
+                                                       "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20DJ%20c%E1%BA%A7u%20h%E1%BB%93n_%20B%E1%BA%ADc%20S%2B%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
                                                    },
                                                    {
                                                        "id":  472,
@@ -7274,15 +7274,15 @@
                                                    {
                                                        "id":  474,
                                                        "hero":  "Violet",
-                                                       "skin_name":  "Phi công trẻ",
-                                                       "tag":  "Bậc S+ Hữu hạn",
+                                                       "skin_name":  "Lam tước",
+                                                       "tag":  "Bậc S+",
                                                        "theme":  null,
                                                        "tier_folder":  "3_Bậc S+",
                                                        "tier_name":  "Bậc S+",
                                                        "subfolder":  "",
-                                                       "filename":  "Violet_ Phi công trẻ_ Bậc S+ Hữu hạn.png",
-                                                       "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Phi công trẻ_ Bậc S+ Hữu hạn.png",
-                                                       "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20Phi%20c%C3%B4ng%20tr%E1%BA%BB_%20B%E1%BA%ADc%20S%2B%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
+                                                       "filename":  "Violet_ Lam tước_ Bậc S+.png",
+                                                       "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Lam tước_ Bậc S+.png",
+                                                       "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20Lam%20t%C6%B0%E1%BB%9Bc_%20B%E1%BA%ADc%20S%2B.png"
                                                    },
                                                    {
                                                        "id":  475,
@@ -16510,15 +16510,15 @@
                   {
                       "id":  3,
                       "hero":  "Annette",
-                      "skin_name":  "Nữ Quản ga",
+                      "skin_name":  "Nữ sinh Trung học",
                       "tag":  "Bleach",
                       "theme":  "Bleach",
                       "tier_folder":  "1_Bậc SSS \u0026 SSS+",
                       "tier_name":  "Bậc SSS \u0026 SSS+",
                       "subfolder":  "",
-                      "filename":  "Annette_ Nữ Quản ga_ Bleach.png",
-                      "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Annette_ Nữ Quản ga_ Bleach.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Annette_%20N%E1%BB%AF%20Qu%E1%BA%A3n%20ga_%20Bleach.png"
+                      "filename":  "Annette_ Nữ sinh trung học_ Bleach.png",
+                      "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Annette_ Nữ sinh trung học_ Bleach.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Annette_%20N%E1%BB%AF%20sinh%20trung%20h%E1%BB%8Dc_%20Bleach.png"
                   },
                   {
                       "id":  4,
@@ -17095,15 +17095,15 @@
                   {
                       "id":  48,
                       "hero":  "Violet",
-                      "skin_name":  "Thứ nguyên vệ thần",
+                      "skin_name":  "Vọng Nguyệt Long Cơ",
                       "tag":  "Bậc SSS Hữu hạn",
                       "theme":  "Thứ Nguyên Vệ Thần",
                       "tier_folder":  "1_Bậc SSS \u0026 SSS+",
                       "tier_name":  "Bậc SSS \u0026 SSS+",
                       "subfolder":  "",
-                      "filename":  "Violet_ Thứ nguyên vệ thần_ Bậc SSS Hữu hạn.png",
-                      "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Violet_ Thứ nguyên vệ thần_ Bậc SSS Hữu hạn.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Violet_%20Th%E1%BB%A9%20nguy%C3%AAn%20v%E1%BB%87%20th%E1%BA%A7n_%20B%E1%BA%ADc%20SSS%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
+                      "filename":  "Violet_ Vọng Nguyệt Long Cơ_ Bậc SSS Hữu hạn.png",
+                      "rel_path":  "Xếp theo bậc/1_Bậc SSS \u0026 SSS+/Violet_ Vọng Nguyệt Long Cơ_ Bậc SSS Hữu hạn.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/1_B%E1%BA%ADc%20SSS%20%26%20SSS%2B/Violet_%20V%E1%BB%8Dng%20Nguy%E1%BB%87t%20Long%20C%C6%A1_%20B%E1%BA%ADc%20SSS%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
                   },
                   {
                       "id":  49,
@@ -18980,15 +18980,15 @@
                   {
                       "id":  193,
                       "hero":  "Violet",
-                      "skin_name":  "Nữ Đặc Cảnh",
+                      "skin_name":  "ECHO",
                       "tag":  "ECHO",
                       "theme":  null,
                       "tier_folder":  "2_Bậc SS \u0026 SS+",
                       "tier_name":  "Bậc SS \u0026 SS+",
                       "subfolder":  "",
-                      "filename":  "Violet_ Nữ Đặc Cảnh_ ECHO.png",
-                      "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Nữ Đặc Cảnh_ ECHO.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20N%E1%BB%AF%20%C4%90%E1%BA%B7c%20C%E1%BA%A3nh_%20ECHO.png"
+                      "filename":  "Violet_ ECHO.png",
+                      "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ ECHO.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20ECHO.png"
                   },
                   {
                       "id":  194,
@@ -19006,15 +19006,15 @@
                   {
                       "id":  195,
                       "hero":  "Violet",
-                      "skin_name":  "Pháo hoa Neon tuyệt sắc",
+                      "skin_name":  "Thần Long tỷ tỷ",
                       "tag":  "Bậc SS",
                       "theme":  null,
                       "tier_folder":  "2_Bậc SS \u0026 SS+",
                       "tier_name":  "Bậc SS \u0026 SS+",
                       "subfolder":  "",
-                      "filename":  "Violet_ Pháo hoa Neon tuyệt sắc_ Bậc SS.png",
-                      "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Pháo hoa Neon tuyệt sắc_ Bậc SS.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20Ph%C3%A1o%20hoa%20Neon%20tuy%E1%BB%87t%20s%E1%BA%AFc_%20B%E1%BA%ADc%20SS.png"
+                      "filename":  "Violet_ Thần long tỷ tỷ_Bậc SS.png",
+                      "rel_path":  "Xếp theo bậc/2_Bậc SS \u0026 SS+/Violet_ Thần long tỷ tỷ_Bậc SS.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/2_B%E1%BA%ADc%20SS%20%26%20SS%2B/Violet_%20Th%E1%BA%A7n%20long%20t%E1%BB%B7%20t%E1%BB%B7_B%E1%BA%ADc%20SS.png"
                   },
                   {
                       "id":  196,
@@ -22594,15 +22594,15 @@
                   {
                       "id":  471,
                       "hero":  "Violet",
-                      "skin_name":  "Lính đánh thuê",
-                      "tag":  "Bậc S+",
+                      "skin_name":  "DJ cầu hồn",
+                      "tag":  "Bậc S+ Hữu hạn",
                       "theme":  null,
                       "tier_folder":  "3_Bậc S+",
                       "tier_name":  "Bậc S+",
                       "subfolder":  "",
-                      "filename":  "Violet_ Lính đánh thuê_ Bậc S+.png",
-                      "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Lính đánh thuê_ Bậc S+.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20L%C3%ADnh%20%C4%91%C3%A1nh%20thu%C3%AA_%20B%E1%BA%ADc%20S%2B.png"
+                      "filename":  "Violet_ DJ cầu hồn_ Bậc S+ Hữu hạn.png",
+                      "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ DJ cầu hồn_ Bậc S+ Hữu hạn.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20DJ%20c%E1%BA%A7u%20h%E1%BB%93n_%20B%E1%BA%ADc%20S%2B%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
                   },
                   {
                       "id":  472,
@@ -22633,15 +22633,15 @@
                   {
                       "id":  474,
                       "hero":  "Violet",
-                      "skin_name":  "Phi công trẻ",
-                      "tag":  "Bậc S+ Hữu hạn",
+                      "skin_name":  "Lam tước",
+                      "tag":  "Bậc S+",
                       "theme":  null,
                       "tier_folder":  "3_Bậc S+",
                       "tier_name":  "Bậc S+",
                       "subfolder":  "",
-                      "filename":  "Violet_ Phi công trẻ_ Bậc S+ Hữu hạn.png",
-                      "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Phi công trẻ_ Bậc S+ Hữu hạn.png",
-                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20Phi%20c%C3%B4ng%20tr%E1%BA%BB_%20B%E1%BA%ADc%20S%2B%20H%E1%BB%AFu%20h%E1%BA%A1n.png"
+                      "filename":  "Violet_ Lam tước_ Bậc S+.png",
+                      "rel_path":  "Xếp theo bậc/3_Bậc S+/Violet_ Lam tước_ Bậc S+.png",
+                      "web_path":  "./skins/X%E1%BA%BFp%20theo%20b%E1%BA%ADc/3_B%E1%BA%ADc%20S%2B/Violet_%20Lam%20t%C6%B0%E1%BB%9Bc_%20B%E1%BA%ADc%20S%2B.png"
                   },
                   {
                       "id":  475,
