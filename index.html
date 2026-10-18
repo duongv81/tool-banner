@@ -335,87 +335,127 @@
     <!-- ==================== TAB 3: XEM TRƯỚC VÀ XUẤT ẢNH GHÉP ==================== -->
     <section id="tab-banner" class="tab-pane">
       <div class="section-card">
-        <div class="section-header">
-          <div>
-            <h2 class="section-title">Bước 3: Xem Trước Bố Cục Banner & Xuất Ảnh Ghép</h2>
-            <p class="section-desc">
-              Bố cục chuẩn 15 Cột &times; 6 Hàng (hoặc tùy biến số hàng). Bạn có thể kéo thả để tráo đổi vị trí bất kỳ thẻ nào.
+        <!-- 1. HEADER: Title & Action Buttons -->
+        <div class="banner-top-header">
+          <div class="banner-title-area">
+            <div class="banner-title-badge">
+              <span class="badge-dot"></span> BƯỚC 3: XUẤT ẢNH BANNER
+            </div>
+            <h2 class="banner-main-title">Xem Trước Bố Cục & Tải Ảnh Ghép</h2>
+            <p class="banner-main-desc">
+              Khổ chuẩn 15 Cột. Kéo thả bất kỳ thẻ nào để đổi chỗ vị trí trực quan.
             </p>
           </div>
-          <div class="action-group">
-            <div class="profile-layout-selector">
-              <label for="profile-layout-style">Bố cục góc thông tin:</label>
-              <select id="profile-layout-style" class="select-input">
-                <option value="big_2x2" selected>⭐ Khối Lớn 2x2 (Mặc định - Avatar & Toàn Bộ Thông Tin To Rõ)</option>
-                <option value="standard">📌 Chuẩn Mẫu (Avatar 1 ô + Tướng/Skin 1 ô + Tài Nguyên)</option>
-                <option value="wide_2x1">📌 Avatar Ngang 2x1 (Avatar & Tên rộng 2 ô)</option>
-              </select>
-            </div>
-            <div class="rows-selector">
-              <label for="banner-rows-count">Số hàng:</label>
-              <select id="banner-rows-count" class="select-input">
-                <option value="auto" selected>✨ Tự Động (Vừa khít số skin)</option>
-                <option value="2">2 Hàng (Tối đa 24 skin)</option>
-                <option value="3">3 Hàng (Tối đa 39 skin)</option>
-                <option value="4">4 Hàng (Tối đa 54 skin)</option>
-                <option value="5">5 Hàng (Tối đa 69 skin)</option>
-                <option value="6">6 Hàng (Tối đa 84 skin)</option>
-                <option value="7">7 Hàng (Tối đa 99 skin)</option>
-                <option value="8">8 Hàng (Tối đa 114 skin)</option>
-                <option value="9">9 Hàng (Tối đa 129 skin)</option>
-                <option value="10">10 Hàng (Tối đa 144 skin)</option>
-                <option value="12">12 Hàng (Tối đa 174 skin)</option>
-              </select>
-            </div>
-            <div class="zoom-controls">
-              <span class="zoom-label">Thu phóng:</span>
-              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="120">75%</button>
-              <button class="btn btn-small btn-secondary btn-zoom active" data-zoom="160">100%</button>
-              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="195">130%</button>
-              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="230">Full HD (230px)</button>
-            </div>
-            <div class="sort-mode-selector">
-              <label for="sort-mode-style">Gom nhóm:</label>
-              <select id="sort-mode-style" class="select-input">
-                <option value="smart" selected>🌟 Gom Cặp Thông Minh (Folder SSS + Cùng Tướng + Cùng Bộ)</option>
-                <option value="hero">🦸 Gom Toàn Bộ Theo Tướng (Nakroth, Airi... cạnh nhau)</option>
-                <option value="theme">🎬 Gom Theo Bộ Sưu Tập (Collab, Thứ Nguyên, Anime...)</option>
-                <option value="tier">💎 Sắp Xếp Thuần Theo Bậc (SSS ➔ SS ➔ S+ ➔ EVO ➔ SSM ➔ S ➔ Thưởng Hạng ➔ A)</option>
-              </select>
-            </div>
-            <button id="btn-sort-hierarchy" class="btn btn-secondary" title="Sắp xếp lại vị trí toàn bộ skin theo quy luật gom nhóm đã chọn">
-              ⚡ Sắp Xếp Lại
+
+          <div class="banner-primary-actions">
+            <button id="btn-sort-hierarchy" class="btn btn-secondary btn-sleek" title="Sắp xếp lại vị trí toàn bộ skin theo quy luật gom nhóm đã chọn">
+              <span class="btn-icon">⚡</span> Sắp Xếp Lại
             </button>
-            <button id="btn-export-canvas" class="btn btn-primary glow-btn">
-              📸 Tải Ảnh Về Máy (PNG Nét Cao)
+            <button id="btn-export-canvas" class="btn btn-primary glow-btn btn-sleek-primary">
+              <span class="btn-icon">📸</span> Tải Ảnh PNG Nét Cao
             </button>
-            <button id="btn-export-pil" class="btn btn-accent" title="Xuất bằng Python Pillow 4K siêu sắc nét">
-              🖥️ Xuất Bằng Python Server
+            <button id="btn-export-pil" class="btn btn-accent btn-sleek-accent" title="Xuất bằng Python Pillow 4K siêu sắc nét">
+              <span class="btn-icon">🖥️</span> Xuất Server 4K
             </button>
           </div>
+        </div>
 
-          <!-- Thanh Lọc / Bỏ Bậc (Tự Động Lấp Đầy Hàng Cuối) -->
-          <div class="banner-exclude-bar">
-            <span class="exclude-bar-title">🚫 Lọc Bỏ Bậc (Tự lấp đầy hàng cuối):</span>
+        <!-- 2. TOOLBAR: Settings & Zoom Grid -->
+        <div class="banner-controls-bar">
+          <div class="control-box">
+            <label for="profile-layout-style" class="control-label">
+              <span class="control-icon">📐</span> Khung Profile:
+            </label>
+            <div class="select-wrapper">
+              <select id="profile-layout-style" class="select-input sleek-select">
+                <option value="big_2x2" selected>⭐ Khối Lớn 2x2 (Chuẩn VIP)</option>
+                <option value="standard">📌 Chuẩn Mẫu (Avatar 1 ô)</option>
+                <option value="wide_2x1">📌 Avatar Ngang 2x1</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-box">
+            <label for="banner-rows-count" class="control-label">
+              <span class="control-icon">📊</span> Số hàng:
+            </label>
+            <div class="select-wrapper">
+              <select id="banner-rows-count" class="select-input sleek-select">
+                <option value="auto" selected>✨ Tự Động (Vừa khít skin)</option>
+                <option value="2">2 Hàng (Tối đa 24)</option>
+                <option value="3">3 Hàng (Tối đa 39)</option>
+                <option value="4">4 Hàng (Tối đa 54)</option>
+                <option value="5">5 Hàng (Tối đa 69)</option>
+                <option value="6">6 Hàng (Tối đa 84)</option>
+                <option value="7">7 Hàng (Tối đa 99)</option>
+                <option value="8">8 Hàng (Tối đa 114)</option>
+                <option value="9">9 Hàng (Tối đa 129)</option>
+                <option value="10">10 Hàng (Tối đa 144)</option>
+                <option value="12">12 Hàng (Tối đa 174)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-box">
+            <label for="sort-mode-style" class="control-label">
+              <span class="control-icon">🎯</span> Gom nhóm:
+            </label>
+            <div class="select-wrapper">
+              <select id="sort-mode-style" class="select-input sleek-select">
+                <option value="smart" selected>🌟 Gom Cặp Thông Minh</option>
+                <option value="hero">🦸 Gom Toàn Bộ Theo Tướng</option>
+                <option value="theme">🎬 Gom Theo Bộ Sưu Tập</option>
+                <option value="tier">💎 Theo Bậc (SSS ➔ SS ➔ S+...)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-box zoom-box">
+            <label class="control-label">
+              <span class="control-icon">🔍</span> Thu phóng:
+            </label>
+            <div class="zoom-btn-group">
+              <button class="btn btn-zoom" data-zoom="120">75%</button>
+              <button class="btn btn-zoom active" data-zoom="160">100%</button>
+              <button class="btn btn-zoom" data-zoom="195">130%</button>
+              <button class="btn btn-zoom" data-zoom="230">Full HD</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. EXCLUDE FILTER BAR: 5 Glowing Toggle Pills -->
+        <div class="banner-exclude-bar">
+          <div class="exclude-bar-label">
+            <span class="exclude-shield-icon">🛡️</span>
+            <span class="exclude-main-text">Lọc Bỏ Bậc:</span>
+            <span class="exclude-sub-text">(Tự động lấp đầy hàng cuối phẳng đẹp)</span>
+          </div>
+
+          <div class="exclude-chips-group">
             <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc A, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
               <input type="checkbox" id="chk-exclude-a">
-              <span>Bỏ Bậc A</span>
+              <span class="chip-indicator"></span>
+              <span class="chip-text">Bỏ Bậc A</span>
             </label>
             <label class="exclude-chip" title="Bỏ toàn bộ skin Thưởng Hạng, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
               <input type="checkbox" id="chk-exclude-rank">
-              <span>Bỏ Thưởng Hạng</span>
+              <span class="chip-indicator"></span>
+              <span class="chip-text">Bỏ Thưởng Hạng</span>
             </label>
             <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc S, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
               <input type="checkbox" id="chk-exclude-s">
-              <span>Bỏ Bậc S</span>
+              <span class="chip-indicator"></span>
+              <span class="chip-text">Bỏ Bậc S</span>
             </label>
             <label class="exclude-chip" title="Bỏ toàn bộ skin Sổ Sứ Mệnh, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
               <input type="checkbox" id="chk-exclude-ssm">
-              <span>Bỏ Sổ Sứ Mệnh</span>
+              <span class="chip-indicator"></span>
+              <span class="chip-text">Bỏ Sổ Sứ Mệnh</span>
             </label>
             <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc S+, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
               <input type="checkbox" id="chk-exclude-splus">
-              <span>Bỏ Bậc S+</span>
+              <span class="chip-indicator"></span>
+              <span class="chip-text">Bỏ Bậc S+</span>
             </label>
           </div>
         </div>
