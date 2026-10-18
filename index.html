@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ Ghép Banner Thông Tin & Kho Trang Phục Liên Quân Mobile</title>
+  <link rel="stylesheet" href="./lib/cropper.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-badge">AOV</div>
+      <div>
+        <h1 class="app-title">LIÊN QUÂN MOBILE - BỘ TẠO BANNER KHO TRANG PHỤC ACC</h1>
+        <p class="app-subtitle">Tự động ghép ảnh thông tin tài khoản & bộ sưu tập skin theo bố cục chuẩn giải đấu</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="stat-pill" title="Tổng số skin đang được chọn">
+        <span class="stat-label">Skin đã chọn:</span>
+        <span id="selected-skins-count" class="stat-val highlight">0</span>
+      </div>
+      <div class="stat-pill" title="Số mảnh ảnh đã cắt">
+        <span class="stat-label">Ảnh đã cắt:</span>
+        <span id="cropped-count" class="stat-val">0</span>
+      </div>
+      <button id="btn-quick-export" class="btn btn-primary glow-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Xuất Ảnh Ghép
+      </button>
+    </div>
+  </header>
+
+  <!-- Step Navigation Tabs -->
+  <nav class="step-nav">
+    <button class="step-tab active" data-tab="tab-crop">
+      <span class="step-num">1</span>
+      <span>Nhập & Cắt Ảnh Kiểu (Profile)</span>
+    </button>
+    <button class="step-tab" data-tab="tab-skins">
+      <span class="step-num">2</span>
+      <span>Bảng Chọn Skin Acc (Tướng &times; Bậc)</span>
+    </button>
+    <button class="step-tab" data-tab="tab-banner">
+      <span class="step-num">3</span>
+      <span>Xem Trước & Tinh Chỉnh Banner</span>
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- ==================== TAB 1: NHẬP VÀ CẮT ẢNH ==================== -->
+    <section id="tab-crop" class="tab-pane active">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Bước 1: Nhập Ảnh Chụp Màn Hình & Cắt Ghép Vào Banner</h2>
+            <p class="section-desc">
+              Tải lên ảnh chụp màn hình game (ảnh thông tin kiện tướng, lịch sử đấu, thông số rank...). Bạn có thể tải nhiều ảnh cùng lúc, thêm ảnh bất cứ lúc nào, rồi cắt từng phần (Avatar, Tướng tủ, Bảng thông số) để đặt vào góc banner.
+            </p>
+          </div>
+          <div class="action-group">
+            <button id="btn-batch-crop" class="btn btn-secondary">
+              ⚡ Cắt Lần Lượt Tất Cả
+            </button>
+            <button id="btn-clear-images" class="btn btn-danger-outline">
+              Xóa Hết Ảnh Đã Tải
+            </button>
+          </div>
+        </div>
+
+        <!-- Auto Stats Input Panel (No Cropping Needed!) -->
+        <div class="stats-auto-card">
+          <div class="stats-auto-header">
+            <div class="stats-auto-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              🔢 Nhập Trực Tiếp Thông Số & Tài Nguyên (Tự Động Nằm Kế Khối Lớn 2x2 - Không Cần Cắt Ảnh)
+            </div>
+            <span class="badge-auto-tag">✨ Tự Động Ghép Icon Game</span>
+          </div>
+          <p class="stats-auto-desc">
+            Không cần phải cắt ô tướng, skin hay tài nguyên từ ảnh! Bạn chỉ cần nhập các số bên dưới, hệ thống sẽ tự động ghép các icon chuẩn game thu nhỏ vừa vặn và hiển thị ngay cạnh bên phải của Khối Lớn 2x2: <b>Ô Trên: Số Tướng & Trang Phục</b>; <b>Ô Dưới: Quân Huy, Thẻ Đổi Tên, Vàng, Ruby</b>.
+          </p>
+
+          <div class="stats-auto-grid-2col">
+            <!-- Box 1: Số Tướng & Trang Phục (Cạnh 2x2 - Trên) -->
+            <div class="stats-subpanel">
+              <div class="stats-subpanel-title">🛡️ Nằm bên phải Khối 2x2 (Ở TRÊN): Số Tướng & Trang Phục</div>
+              <div class="stats-auto-form">
+                <div class="stat-input-group">
+                  <div class="stat-icon-preview">
+                    <img src="./img/tuong.png" alt="Tướng" width="38" height="38">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-hero-count">Số Tướng:</label>
+                    <input type="number" id="auto-hero-count" value="126" min="1" max="250" class="stat-num-input">
+                  </div>
+                </div>
+
+                <div class="stat-input-group">
+                  <div class="stat-icon-preview">
+                    <img src="./img/trang%20phuc.png" alt="Trang Phục" width="38" height="38">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-skin-count">Số Trang Phục (Skin):</label>
+                    <div class="input-with-action">
+                      <input type="number" id="auto-skin-count" value="406" min="1" max="2500" class="stat-num-input">
+                      <button id="btn-sync-skin-count" class="btn btn-small btn-secondary" title="Tự động lấy theo số lượng skin bạn đã tick chọn ở Bước 2">
+                        ⚡ Lấy từ skin (<span id="sync-count-num">0</span>)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Box 2: Tài Nguyên (Cạnh 2x2 - Dưới) -->
+            <div class="stats-subpanel">
+              <div class="stats-subpanel-title">💎 Nằm bên phải Khối 2x2 (Ở DƯỚI): Tài Nguyên Tài Khoản</div>
+              <div class="stats-resource-grid">
+                <div class="stat-input-group stat-group-compact">
+                  <div class="stat-icon-preview">
+                    <img src="./img/quan_huy.png" alt="Quân Huy" width="34" height="34">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-quan-huy">1. Quân Huy:</label>
+                    <input type="text" id="auto-quan-huy" value="1580" class="stat-num-input">
+                  </div>
+                </div>
+
+                <div class="stat-input-group stat-group-compact">
+                  <div class="stat-icon-preview">
+                    <img src="./img/the_doi_ten.png" alt="Thẻ Đổi Tên" width="34" height="34">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-the-doi-ten">2. Thẻ Đổi Tên:</label>
+                    <input type="text" id="auto-the-doi-ten" value="12" class="stat-num-input">
+                  </div>
+                </div>
+
+                <div class="stat-input-group stat-group-compact">
+                  <div class="stat-icon-preview">
+                    <img src="./img/vang.png" alt="Vàng" width="34" height="34">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-vang">3. Vàng:</label>
+                    <input type="text" id="auto-vang" value="125k" class="stat-num-input">
+                  </div>
+                </div>
+
+                <div class="stat-input-group stat-group-compact">
+                  <div class="stat-icon-preview">
+                    <img src="./img/ruby.png" alt="Ruby" width="34" height="34">
+                  </div>
+                  <div class="stat-input-body">
+                    <label for="auto-ruby">4. Ruby:</label>
+                    <input type="text" id="auto-ruby" value="3400" class="stat-num-input">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-auto-actions mt-3">
+            <button id="btn-apply-auto-stats" class="btn btn-primary glow-btn">
+              🎨 Cập Nhật Cả 2 Ô Vào Banner Ngay
+            </button>
+            <span id="auto-stats-status" class="status-badge" style="display:none;">✓ Đã cập nhật 2 ô vào Banner</span>
+          </div>
+        </div>
+
+        <!-- Upload Dropzone -->
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="file-input" multiple accept="image/*" class="file-input-hidden">
+          <div class="dropzone-content">
+            <svg class="dropzone-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <div class="dropzone-text">
+              <strong>Kéo thả ảnh chụp màn hình vào đây</strong> hoặc <span class="dropzone-browse">Bấm để duyệt file</span>
+            </div>
+            <div class="dropzone-hint">
+              Hỗ trợ PNG, JPG, WEBP. Cho phép chọn nhiều ảnh cùng lúc hoặc bấm <b>+ Thêm ảnh</b> tùy thích.
+            </div>
+          </div>
+        </div>
+
+        <!-- Uploaded Images Tray -->
+        <div class="sub-header mt-4">
+          <h3 class="sub-title">Danh Sách Ảnh Chụp Màn Hình Đã Tải Lên (<span id="upload-count">0</span> ảnh)</h3>
+          <button id="btn-add-more-img" class="btn btn-small btn-secondary">+ Thêm Ảnh Nữa</button>
+        </div>
+        <div id="uploaded-list" class="uploaded-grid">
+          <div class="empty-state">Chưa có ảnh nào được tải lên. Hãy tải ít nhất 1 ảnh chụp màn hình (như ảnh Thông tin kiện tướng).</div>
+        </div>
+
+        <!-- Cropped Cards Review -->
+        <div class="sub-header mt-5">
+          <div>
+            <h3 class="sub-title">Các Mảnh Đã Cắt Sẵn Sàng Đưa Vào Banner</h3>
+            <p class="sub-desc">Mỗi mảnh đã được gán vào 1 vị trí cố định trên banner (Avatar góc trên trái, Tướng tủ, Bảng thông số...)</p>
+          </div>
+        </div>
+        <div id="cropped-gallery" class="cropped-gallery">
+          <!-- Populated dynamically -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: BẢNG CHỌN SKIN (TƯỚNG x BẬC) ==================== -->
+    <section id="tab-skins" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Bước 2: Bảng Chọn Skin Có Trong Tài Khoản</h2>
+            <p class="section-desc">
+              Bảng ma trận: <b>Cột ngang là Vị Tướng</b> (123 tướng) & <b>Cột dọc là Bậc Trang Phục</b> (13 bậc). Click vào skin để tick chọn/bỏ chọn.
+            </p>
+          </div>
+          <div class="action-group">
+            <button type="button" id="btn-import-list" class="btn btn-secondary glow-btn" title="Dán danh sách tên skin (mỗi dòng 1 tên) để tự động tìm và tick chọn hàng loạt">
+              📋 Nạp Từ Danh Sách
+            </button>
+            <button id="btn-auto-fill-banner" class="btn btn-primary">
+              ✨ Tự Động Xếp Vào Banner
+            </button>
+            <button id="btn-sample-select" class="btn btn-secondary" title="Chọn mẫu 45 skin để test ngay bố cục banner">
+              🎲 Chọn Mẫu Thử (Test)
+            </button>
+            <button id="btn-deselect-all" class="btn btn-danger-outline">
+              Bỏ Chọn Tất Cả
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="skin-filter-bar">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="search-hero" placeholder="Tìm tên tướng (Airi, Valhein, Nakroth...)...">
+          </div>
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <input type="text" id="search-skin" placeholder="Tìm tên trang phục (Thứ nguyên, Bích hải, Quang vinh...)...">
+          </div>
+          <div class="view-toggles">
+            <label class="toggle-label" title="Tự động ẩn các cột tướng không có skin trong bậc đang xem hoặc từ khóa tìm kiếm (giúp bảng cực kỳ gọn gàng)">
+              <input type="checkbox" id="chk-hide-empty-cols" checked>
+              <span>⚡ Ẩn cột tướng trống</span>
+            </label>
+            <label class="toggle-label">
+              <input type="checkbox" id="chk-only-selected">
+              <span>Chỉ hiện skin đã chọn</span>
+            </label>
+          </div>
+          <!-- View Mode Switcher -->
+          <div class="view-mode-tabs">
+            <button type="button" id="btn-view-matrix" class="btn-view-tab active" title="Bảng ma trận 2D theo Tướng và Bậc">
+              📊 Bảng Ma Trận
+            </button>
+            <button type="button" id="btn-view-gallery" class="btn-view-tab" title="Lưới thẻ trực quan không có ô trống, chọn nhanh">
+              🖼️ Lưới Thẻ Nhanh
+            </button>
+          </div>
+
+          <!-- Card Size Controls (50%, 65%, 80%, 100%) -->
+          <div class="card-size-selector">
+            <span class="zoom-label">Thu phóng:</span>
+            <button type="button" class="btn btn-small btn-secondary btn-card-size" data-size="50">50%</button>
+            <button type="button" class="btn btn-small btn-secondary btn-card-size active" data-size="65">65%</button>
+            <button type="button" class="btn btn-small btn-secondary btn-card-size" data-size="80">80%</button>
+            <button type="button" class="btn btn-small btn-secondary btn-card-size" data-size="100">100%</button>
+          </div>
+
+          <!-- Expand Fullscreen / Maximize Height Button -->
+          <button type="button" id="btn-toggle-expand" class="btn btn-small btn-secondary" title="Mở rộng khung thẻ chạm đáy màn hình để xem được tối đa hàng thẻ">
+            ⛶ Mở Rộng
+          </button>
+        </div>
+
+        <!-- Tier Quick Filter Pills -->
+        <div class="tier-pill-bar" id="tier-pill-bar">
+          <!-- Generated dynamically -->
+        </div>
+
+        <!-- Filter Status & Stats Bar -->
+        <div class="filter-status-bar" id="filter-status-bar">
+          <div class="filter-stats-text">
+            <span>Hiển thị: <b id="stat-visible-skins">0</b> trang phục</span>
+            <span class="sep">•</span>
+            <span><b id="stat-visible-heroes">0</b> tướng</span>
+            <span class="sep">•</span>
+            <span>Đã tick chọn: <b id="stat-selected-skins">0</b> trang phục</span>
+          </div>
+          <button type="button" id="btn-reset-filters" class="btn-text-action" style="display:none;" onclick="window.resetAllFilters()">
+            ✕ Đặt lại tất cả bộ lọc
+          </button>
+        </div>
+
+        <!-- 1. The Matrix Table Container -->
+        <div class="matrix-wrapper size-65" id="matrix-wrapper">
+          <table class="matrix-table" id="matrix-table">
+            <thead>
+              <tr id="matrix-header-row">
+                <th class="matrix-th-corner">Bậc \ Tướng</th>
+                <!-- Hero columns inserted dynamically -->
+              </tr>
+            </thead>
+            <tbody id="matrix-body">
+              <!-- Tier rows with skins inserted dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 2. The Gallery Grid Container -->
+        <div class="gallery-wrapper size-65" id="gallery-wrapper" style="display:none;">
+          <div class="gallery-grid" id="gallery-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: XEM TRƯỚC VÀ XUẤT ẢNH GHÉP ==================== -->
+    <section id="tab-banner" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Bước 3: Xem Trước Bố Cục Banner & Xuất Ảnh Ghép</h2>
+            <p class="section-desc">
+              Bố cục chuẩn 15 Cột &times; 6 Hàng (hoặc tùy biến số hàng). Bạn có thể kéo thả để tráo đổi vị trí bất kỳ thẻ nào.
+            </p>
+          </div>
+          <div class="action-group">
+            <div class="profile-layout-selector">
+              <label for="profile-layout-style">Bố cục góc thông tin:</label>
+              <select id="profile-layout-style" class="select-input">
+                <option value="big_2x2" selected>⭐ Khối Lớn 2x2 (Mặc định - Avatar & Toàn Bộ Thông Tin To Rõ)</option>
+                <option value="standard">📌 Chuẩn Mẫu (Avatar 1 ô + Tướng/Skin 1 ô + Tài Nguyên)</option>
+                <option value="wide_2x1">📌 Avatar Ngang 2x1 (Avatar & Tên rộng 2 ô)</option>
+              </select>
+            </div>
+            <div class="rows-selector">
+              <label for="banner-rows-count">Số hàng:</label>
+              <select id="banner-rows-count" class="select-input">
+                <option value="auto" selected>✨ Tự Động (Vừa khít số skin)</option>
+                <option value="2">2 Hàng (Tối đa 24 skin)</option>
+                <option value="3">3 Hàng (Tối đa 39 skin)</option>
+                <option value="4">4 Hàng (Tối đa 54 skin)</option>
+                <option value="5">5 Hàng (Tối đa 69 skin)</option>
+                <option value="6">6 Hàng (Tối đa 84 skin)</option>
+                <option value="7">7 Hàng (Tối đa 99 skin)</option>
+                <option value="8">8 Hàng (Tối đa 114 skin)</option>
+                <option value="9">9 Hàng (Tối đa 129 skin)</option>
+                <option value="10">10 Hàng (Tối đa 144 skin)</option>
+                <option value="12">12 Hàng (Tối đa 174 skin)</option>
+              </select>
+            </div>
+            <div class="zoom-controls">
+              <span class="zoom-label">Thu phóng:</span>
+              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="120">75%</button>
+              <button class="btn btn-small btn-secondary btn-zoom active" data-zoom="160">100%</button>
+              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="195">130%</button>
+              <button class="btn btn-small btn-secondary btn-zoom" data-zoom="230">Full HD (230px)</button>
+            </div>
+            <button id="btn-sort-hierarchy" class="btn btn-secondary">
+              ⚡ Sắp Xếp Chuẩn Theo Bậc
+            </button>
+            <button id="btn-export-canvas" class="btn btn-primary glow-btn">
+              📸 Tải Ảnh Về Máy (PNG Nét Cao)
+            </button>
+            
+          </div>
+        </div>
+
+        <!-- Live Banner Viewport -->
+        <div class="banner-scroll-container">
+          <div class="banner-wrapper" id="banner-wrapper">
+            <!-- 15 cols grid rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL CẮT ẢNH (CROPPER MODAL) ==================== -->
+  <div id="crop-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Cắt Vùng Ảnh Cho Banner</h3>
+        <button id="btn-close-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="crop-image-area">
+          <img id="cropper-image" src="" alt="Vùng ảnh cần cắt">
+        </div>
+        <div class="crop-sidebar">
+          <div class="crop-group">
+            <label class="crop-label">1. Tỉ lệ khung cắt chuẩn:</label>
+            <div class="btn-group-vertical">
+              <button class="btn btn-ratio active" data-ratio="0.6371">
+                <strong>Ô Thẻ Đơn (1 : 1.57)</strong>
+                <small>Avatar / Tên hoặc Tướng đại diện</small>
+              </button>
+              <button class="btn btn-ratio" data-ratio="1.2742">
+                <strong>Ô Đôi (2 : 1.57)</strong>
+                <small>Bảng thông số tài khoản (Gộp 2 ô)</small>
+              </button>
+              <button class="btn btn-ratio" data-ratio="NaN">
+                <strong>Tự do (Free Crop)</strong>
+                <small>Tùy chỉnh góc cắt bất kỳ</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="crop-group mt-3">
+            <label class="crop-label">2. Vị trí gán trên Banner:</label>
+            <select id="crop-target-slot" class="select-input select-full">
+              <option value="slot_big_profile" selected>⭐ Khối Lớn 2x2 (Avatar & Toàn Bộ Cột Thông Tin Cũ - Mặc định)</option>
+              <option value="slot_tuong_skin">📌 Nằm bên phải Khối 2x2 (Ở TRÊN): Số Tướng & Trang Phục</option>
+              <option value="slot_tai_nguyen">📌 Nằm bên phải Khối 2x2 (Ở DƯỚI): Tài Nguyên (Quân Huy, Thẻ ĐT, Vàng, Ruby)</option>
+              <option value="slot_avatar">📌 Ô Đơn 1x1 (Hàng 1, Cột 1): Avatar & Tên</option>
+              <option value="slot_hero">📌 Ô Đơn 1x1 (Hàng 1, Cột 2): Tướng tủ / Danh hiệu</option>
+              <option value="slot_avatar_wide">📌 Ô Ngang 2x1 (Hàng 1, Cột 1-2): Avatar & Tên Đôi</option>
+              <option value="slot_top_right">📌 Góc Trên Phải (Hàng 1, Cột 15)</option>
+              <option value="slot_custom">📌 Chọn ô bất kỳ...</option>
+            </select>
+            <p class="crop-hint mt-2">💡 <b>Mẹo:</b> Cả 2 ô nằm bên phải Khối Lớn 2x2 (<b>Số Tướng & Trang Phục</b> ở trên, <b>Tài Nguyên</b> ở dưới) đã được hệ thống tự động vẽ sẵn theo các số bạn nhập ở trên. Bạn chỉ cần cắt <b>⭐ Khối Lớn 2x2 (Avatar & Thông Tin)</b> là hoàn tất góc hồ sơ!</p>
+          </div>
+
+          <div class="crop-group mt-3" id="custom-slot-picker-wrap" style="display:none;">
+            <label class="crop-label">Chọn số ô (1 - 90):</label>
+            <input type="number" id="custom-slot-num" class="text-input" min="1" max="90" value="1">
+          </div>
+
+          <div class="crop-actions mt-4">
+            <button id="btn-apply-crop" class="btn btn-primary btn-block">
+              ✅ Cắt & Gán Vào Banner
+            </button>
+            <button id="btn-next-crop" class="btn btn-secondary btn-block mt-2">
+              Lưu & Cắt Ảnh Tiếp Theo ➡️
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL XEM ẢNH XUẤT HOÀN TẤT ==================== -->
+  <div id="export-modal" class="modal-overlay">
+    <div class="modal-container modal-large">
+      <div class="modal-header">
+        <h3 class="modal-title">Ảnh Ghép Hoàn Tất</h3>
+        <button id="btn-close-export-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body export-body">
+        <div class="export-preview-box">
+          <img id="export-preview-img" src="" alt="Ảnh ghép banner">
+        </div>
+        <div class="export-footer">
+          <div id="export-info" class="export-info">Độ phân giải: 3498 &times; 2187 px</div>
+          <div class="action-group">
+            <a id="btn-download-exported" class="btn btn-primary" download="LienQuan_Banner.png">
+              ⬇️ Tải Ảnh Về Máy
+            </a>
+            <button id="btn-close-export-btn" class="btn btn-secondary">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL NẠP TỰ ĐỘNG TỪ DANH SÁCH SKIN ==================== -->
+  <div id="import-modal" class="modal-overlay">
+    <div class="modal-container modal-import">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">📋 Nạp Tự Động Từ Danh Sách Skin</h3>
+          <p class="modal-subtitle">Dán danh sách tên skin (mỗi dòng 1 tên). Hệ thống sẽ tự động quét thông minh và tick chọn ngay lập tức!</p>
+        </div>
+        <button id="btn-close-import-modal" class="modal-close">&times;</button>
+      </div>
+
+      <div class="modal-body import-modal-body">
+        <div class="import-input-panel">
+          <div class="import-toolbar">
+            <label class="import-label">Nhập hoặc Dán danh sách (mỗi dòng 1 skin):</label>
+            <div class="import-quick-actions">
+              <button type="button" id="btn-paste-clipboard" class="btn btn-small btn-secondary" title="Dán trực tiếp từ bộ nhớ tạm">
+                📋 Dán từ Clipboard
+              </button>
+              <button type="button" id="btn-sample-import" class="btn btn-small btn-secondary" title="Thử nghiệm với danh sách mẫu">
+                💡 Danh sách mẫu
+              </button>
+              <button type="button" id="btn-clear-import" class="btn btn-small btn-danger-outline" title="Xóa toàn bộ ô nhập">
+                🧹 Xóa
+              </button>
+            </div>
+          </div>
+
+          <textarea id="import-skin-text" class="import-textarea" placeholder="Dán danh sách tên skin vào đây (mỗi dòng 1 tên), ví dụ:
+1. Thứ nguyên vệ thần
+2. Siêu việt bậc V
+3. Chiến thần bậc V
+4. Vũ khí tối thượng
+5. Bích hải thánh nữ
+Hoặc ghi kèm tên tướng:
+Nakroth Thứ nguyên vệ thần
+Butterfly Siêu việt
+Allain Hắc kiếm sĩ Kirito..."></textarea>
+
+          <div class="import-options">
+            <label class="toggle-label" title="Bỏ chọn các skin cũ trước khi nạp danh sách mới">
+              <input type="checkbox" id="chk-clear-previous" checked>
+              <span>Xóa các skin đã tick trước đó (nạp mới hoàn toàn)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Result Preview Section -->
+        <div id="import-result-panel" class="import-result-panel" style="display:none;">
+          <div class="import-result-header">
+            <div class="result-badge-success">
+              ✅ Tìm thấy: <b id="import-success-count">0</b> skin
+            </div>
+            <div id="import-fail-badge" class="result-badge-fail" style="display:none;">
+              ⚠️ Không tìm thấy: <b id="import-fail-count">0</b> dòng
+            </div>
+          </div>
+
+          <!-- Matched list preview -->
+          <div class="import-matched-list" id="import-matched-list"></div>
+
+          <!-- Unmatched lines list (if any) -->
+          <div class="import-unmatched-box" id="import-unmatched-box" style="display:none;">
+            <div class="unmatched-title">Các dòng không tìm thấy trang phục tương ứng:</div>
+            <div class="unmatched-list" id="import-unmatched-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer import-footer">
+        <div class="import-footer-info">
+          <span>Tổng số dòng: <b id="import-total-lines">0</b></span>
+        </div>
+        <div class="action-group">
+          <button type="button" id="btn-do-import" class="btn btn-primary glow-btn">
+            ⚡ Tìm & Tick Chọn Ngay
+          </button>
+          <button type="button" id="btn-apply-and-arrange" class="btn btn-secondary glow-btn" style="display:none;">
+            ✨ Xếp Thẳng Vào Banner
+          </button>
+          <button type="button" id="btn-cancel-import" class="btn btn-secondary">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div id="loading-text" class="loading-text">Đang tải dữ liệu 1,119 skin Liên Quân...</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./lib/cropper.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
