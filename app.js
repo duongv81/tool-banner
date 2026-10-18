@@ -1103,7 +1103,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (chkHideEmptyCols) chkHideEmptyCols.addEventListener('change', applyFilters);
 
   function initMatrixTable() {
-    const { heroes, tiers, matrix } = state.catalog;
+    if (!state.catalog) return;
+    const heroes = state.catalog.heroes || [];
+    const tiers = state.catalog.tiers || [];
+    const matrix = state.catalog.matrix || {};
 
     // Build Header Columns: Heroes
     let headerHtml = `<th class="matrix-th-corner">Bậc Trang Phục \\ Vị Tướng (${heroes.length} tướng)</th>`;
@@ -1196,7 +1199,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Toggle all skins for a specific hero
   window.toggleAllHeroSkins = (heroName) => {
-    const { tiers, matrix } = state.catalog;
+    if (!state.catalog) return;
+    const tiers = state.catalog.tiers || [];
+    const matrix = state.catalog.matrix || {};
     let heroSkinIds = [];
     tiers.forEach(t => {
       const skins = matrix[t.folder]?.[heroName] || [];
@@ -1224,7 +1229,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Toggle all skins for a specific tier
   window.toggleAllTierSkins = (tierFolder) => {
-    const { heroes, matrix } = state.catalog;
+    if (!state.catalog) return;
+    const heroes = state.catalog.heroes || [];
+    const matrix = state.catalog.matrix || {};
     let tierSkinIds = [];
     heroes.forEach(h => {
       const skins = matrix[tierFolder]?.[h.name] || [];
