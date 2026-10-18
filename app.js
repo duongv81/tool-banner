@@ -66,12 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   async function loadData() {
     try {
+      const isGitHub = window.location.hostname.includes('github.io') || window.location.protocol === 'file:';
       let res;
-      try {
-        res = await fetch('/api/data');
-        if (!res.ok) throw new Error('Not ok');
-      } catch (e) {
+      if (isGitHub) {
         res = await fetch('./catalog.json');
+      } else {
+        try {
+          res = await fetch('/api/data');
+          if (!res.ok) throw new Error('Not ok');
+        } catch (e) {
+          res = await fetch('./catalog.json');
+        }
       }
       if (!res.ok) throw new Error('Không thể tải catalog skin');
       const data = await res.json();
@@ -517,12 +522,12 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onerror = checkDone;
       });
 
-      cachedTuongImg.src = '/img/tuong.png';
-      cachedSkinImg.src = '/img/trang%20phuc.png';
-      cachedQuanHuyImg.src = '/img/quan_huy.png';
-      cachedTheDoiTenImg.src = '/img/the_doi_ten.png';
-      cachedVangImg.src = '/img/vang.png';
-      cachedRubyImg.src = '/img/ruby.png';
+      cachedTuongImg.src = './img/tuong.png';
+      cachedSkinImg.src = './img/trang%20phuc.png';
+      cachedQuanHuyImg.src = './img/quan_huy.png';
+      cachedTheDoiTenImg.src = './img/the_doi_ten.png';
+      cachedVangImg.src = './img/vang.png';
+      cachedRubyImg.src = './img/ruby.png';
     });
   }
 
@@ -1075,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
       headerHtml += `
         <th class="matrix-th-hero" data-hero="${h.name}" data-col="${colIdx}">
           <div class="hero-th-content">
-            <img class="hero-avatar-mini" src="${h.avatar || '/static/placeholder.png'}" alt="${h.name}" onerror="this.src='/static/lib/cropper.min.css'">
+            <img class="hero-avatar-mini" src="${h.avatar || './lib/cropper.min.css'}" alt="${h.name}" onerror="this.style.display='none'">
             <div class="hero-name">${h.name}</div>
             <button class="hero-btn-select-all" onclick="window.toggleAllHeroSkins('${h.name}')">
               Chọn Hết (${h.skin_count})
