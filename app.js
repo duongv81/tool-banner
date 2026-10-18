@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bannerCols: 15,
     bannerSlots: [],          // Array of slot objects representing the banner grid
     profileLayout: 'big_2x2', // Default: 'big_2x2' | 'standard' | 'wide_2x1'
+    sortMode: 'smart',        // Default: 'smart' | 'hero' | 'theme' | 'tier'
     zoomCardW: 160,           // Preview zoom width (120, 160, 195, 230)
     activeTab: 'tab-crop'
   };
@@ -65,9 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   async function loadData() {
     try {
-      loadingText.textContent = "Đang tải dữ liệu 1,119 trang phục Liên Quân...";
-      const res = await fetch('./catalog.json');
-      if (!res.ok) throw new Error('Không thể tải catalog skin từ server');
+      let res;
+      try {
+        res = await fetch('/api/data');
+        if (!res.ok) throw new Error('Not ok');
+      } catch (e) {
+        res = await fetch('./catalog.json');
+      }
+      if (!res.ok) throw new Error('Không thể tải catalog skin');
       const data = await res.json();
       state.catalog = data;
       console.log("[Data Loaded]", data);
@@ -511,12 +517,12 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onerror = checkDone;
       });
 
-      cachedTuongImg.src = './img/tuong.png';
-      cachedSkinImg.src = './img/trang%20phuc.png';
-      cachedQuanHuyImg.src = './img/quan_huy.png';
-      cachedTheDoiTenImg.src = './img/the_doi_ten.png';
-      cachedVangImg.src = './img/vang.png';
-      cachedRubyImg.src = './img/ruby.png';
+      cachedTuongImg.src = '/img/tuong.png';
+      cachedSkinImg.src = '/img/trang%20phuc.png';
+      cachedQuanHuyImg.src = '/img/quan_huy.png';
+      cachedTheDoiTenImg.src = '/img/the_doi_ten.png';
+      cachedVangImg.src = '/img/vang.png';
+      cachedRubyImg.src = '/img/ruby.png';
     });
   }
 
@@ -1655,6 +1661,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const sortModeSelect = document.getElementById('sort-mode-style');
+  if (sortModeSelect) {
+    sortModeSelect.addEventListener('change', () => {
+      state.sortMode = sortModeSelect.value;
+      arrangeSkinsToBanner();
+      renderBannerGrid();
+    });
+  }
+
   document.getElementById('btn-sort-hierarchy').addEventListener('click', () => {
     arrangeSkinsToBanner();
     renderBannerGrid();
@@ -1772,6 +1787,216 @@ document.addEventListener('DOMContentLoaded', () => {
     '6_Bậc EVO': 8
   };
 
+  // Detect anime collab / theme collection
+  function detectSkinTheme(skin) {
+    if (skin.theme) return skin.theme;
+    const fn = (skin.filename || '').toLowerCase();
+    const tag = (skin.tag || '').toLowerCase();
+    const sname = (skin.skin_name || '').toLowerCase();
+    const text = `${fn} ${tag} ${sname}`;
+
+    if (text.includes('thứ nguyên') || text.includes('thứ nguyên vệ thần')) return 'Thứ Nguyên Vệ Thần';
+    if (text.includes('attack on titan') || text.includes('eren') || text.includes('mikasa') || text.includes('annie') || text.includes('scout regiment')) return 'Attack on Titan';
+    if (text.includes('sailor moon') || text.includes('tuxedo') || text.includes('chibi moon')) return 'Sailor Moon';
+    if (text.includes('jujutsu') || text.includes('gojo') || text.includes('fushiguro') || text.includes('itadori')) return 'Jujutsu Kaisen';
+    if (text.includes('hunter') || text.includes('killua') || text.includes('gon') || text.includes('kurapika') || text.includes('hisoka')) return 'Hunter x Hunter';
+    if (text.includes('sword art') || text.includes('kirito') || text.includes('asuna')) return 'Sword Art Online';
+    if (text.includes('bleach') || text.includes('ichigo') || text.includes('hitsugaya') || text.includes('byakuya') || text.includes('rukia')) return 'Bleach';
+    if (text.includes('one-punch') || text.includes('saitama') || text.includes('tatsumaki') || text.includes('genos')) return 'One-Punch Man';
+    if (text.includes('tanjiro') || text.includes('nezuko') || text.includes('zenitsu') || text.includes('inosuke')) return 'Demon Slayer';
+    if (text.includes('conan') || text.includes('siêu đạo chích kid')) return 'Conan';
+    if (text.includes('sanrio') || text.includes('kuromi') || text.includes('cinnamoroll') || text.includes('melody')) return 'Sanrio';
+    if (text.includes('tiệc bãi biển')) return 'Tiệc Bãi Biển';
+    if (text.includes('thần sứ')) return 'Thần Sứ';
+    if (text.includes('siêu việt')) return 'Siêu Việt';
+    if (text.includes('thưởng hạng')) return 'Thưởng Hạng';
+    return null;
+  }
+
+  // Smart skin clustering & sorting algorithm
+  function clusterAndSortSkins(skinList, mode = 'smart') {
+    if (!skinList || skinList.length === 0) return [];
+
+    // Mode 1: Pure tier sort
+    if (mode === 'tier') {
+      return [...skinList].sort((a, b) => {
+        const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+        const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+        if (wa !== wb) return wa - wb;
+        return a.hero.localeCompare(b.hero) || a.skin_name.localeCompare(b.skin_name);
+      });
+    }
+
+    // Mode 2: Pure hero sort (all skins of each hero strictly grouped together)
+    if (mode === 'hero') {
+      const heroGroups = {};
+      skinList.forEach(s => {
+        heroGroups[s.hero] = heroGroups[s.hero] || [];
+        heroGroups[s.hero].push(s);
+      });
+      Object.keys(heroGroups).forEach(h => {
+        heroGroups[h].sort((a, b) => (TIER_WEIGHTS[a.tier_folder] || 99) - (TIER_WEIGHTS[b.tier_folder] || 99));
+      });
+      const sortedHeroes = Object.keys(heroGroups).sort((h1, h2) => {
+        const minW1 = Math.min(...heroGroups[h1].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+        const minW2 = Math.min(...heroGroups[h2].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+        if (minW1 !== minW2) return minW1 - minW2;
+        if (heroGroups[h2].length !== heroGroups[h1].length) return heroGroups[h2].length - heroGroups[h1].length;
+        return h1.localeCompare(h2);
+      });
+      const res = [];
+      sortedHeroes.forEach(h => res.push(...heroGroups[h]));
+      return res;
+    }
+
+    // Mode 3: Pure theme / collection sort
+    if (mode === 'theme') {
+      const themeGroups = {};
+      skinList.forEach(s => {
+        const t = detectSkinTheme(s) || ('Hero_' + s.hero);
+        themeGroups[t] = themeGroups[t] || [];
+        themeGroups[t].push(s);
+      });
+      Object.keys(themeGroups).forEach(t => {
+        themeGroups[t].sort((a, b) => (TIER_WEIGHTS[a.tier_folder] || 99) - (TIER_WEIGHTS[b.tier_folder] || 99));
+      });
+      const sortedThemes = Object.keys(themeGroups).sort((t1, t2) => {
+        const minW1 = Math.min(...themeGroups[t1].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+        const minW2 = Math.min(...themeGroups[t2].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+        if (minW1 !== minW2) return minW1 - minW2;
+        return t1.localeCompare(t2);
+      });
+      const res = [];
+      sortedThemes.forEach(t => res.push(...themeGroups[t]));
+      return res;
+    }
+
+    // Mode 4: SMART GROUPING (DEFAULT)
+    // 1. SSS Subfolders (New folder, New folder (3)...) - Highest priority, placed right at top
+    // 2. Dedicated Hero Subfolder - Other skins of the same hero join right next to them
+    // 3. Multi-skin Heroes (Nakroth, Airi, Tulen, Murad...) - Placed together
+    // 4. Multi-skin Collab/Anime Themes - Placed together
+    // 5. Standalone skins by tier
+
+    const heroCounts = {};
+    const themeCounts = {};
+    const sssSubHeroes = {};
+
+    skinList.forEach(s => {
+      heroCounts[s.hero] = (heroCounts[s.hero] || 0) + 1;
+      const t = detectSkinTheme(s);
+      if (t) themeCounts[t] = (themeCounts[t] || 0) + 1;
+      if ((s.tier_folder || '').startsWith('1_') && s.subfolder) {
+        sssSubHeroes[s.subfolder] = sssSubHeroes[s.subfolder] || new Set();
+        sssSubHeroes[s.subfolder].add(s.hero);
+      }
+    });
+
+    const clusters = {};
+    skinList.forEach(s => {
+      const sub = s.subfolder || '';
+      const tf = s.tier_folder || '';
+      const h = s.hero;
+      const t = detectSkinTheme(s);
+
+      let key = '';
+      if (tf.startsWith('1_') && sub) {
+        // Explicit SSS Subfolder created by user
+        key = `1_SUB::${sub}`;
+      } else if (Object.keys(sssSubHeroes).some(k => sssSubHeroes[k].size === 1 && sssSubHeroes[k].has(h))) {
+        // Dedicated hero subfolder exists (e.g. Nakroth in New folder 3) -> Join cluster!
+        const matchSub = Object.keys(sssSubHeroes).find(k => sssSubHeroes[k].size === 1 && sssSubHeroes[k].has(h));
+        key = `1_SUB::${matchSub}`;
+      } else if (heroCounts[h] >= 2) {
+        // Group all skins of the same hero together
+        key = `2_HERO::${h}`;
+      } else if (t && themeCounts[t] >= 2) {
+        // Group related collab/theme together
+        key = `3_THEME::${t}`;
+      } else {
+        const w = TIER_WEIGHTS[tf] || 99;
+        key = `4_STANDALONE::${w.toFixed(1)}::${h}::${s.id}`;
+      }
+
+      clusters[key] = clusters[key] || [];
+      clusters[key].push(s);
+    });
+
+    // Sort skins inside each cluster
+    Object.keys(clusters).forEach(key => {
+      const items = clusters[key];
+      if (key.startsWith('1_SUB')) {
+        // In SSS subfolder: subfolder skins first, then additional hero skins, sorted by tier
+        items.sort((a, b) => {
+          const aInSub = a.tier_folder.startsWith('1_') && a.subfolder ? 0 : 1;
+          const bInSub = b.tier_folder.startsWith('1_') && b.subfolder ? 0 : 1;
+          if (aInSub !== bInSub) return aInSub - bInSub;
+          const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+          const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+          if (wa !== wb) return wa - wb;
+          return a.skin_name.localeCompare(b.skin_name);
+        });
+      } else if (key.startsWith('2_HERO')) {
+        // Inside hero cluster: sort by tier weight (VIP first: SSS -> SS -> S+ -> S -> EVO -> A)
+        items.sort((a, b) => {
+          const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+          const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+          if (wa !== wb) return wa - wb;
+          return a.skin_name.localeCompare(b.skin_name);
+        });
+      } else if (key.startsWith('3_THEME')) {
+        items.sort((a, b) => {
+          const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+          const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+          if (wa !== wb) return wa - wb;
+          return a.hero.localeCompare(b.hero);
+        });
+      }
+    });
+
+    // Sort clusters relative to each other
+    const sortedKeys = Object.keys(clusters).sort((k1, k2) => {
+      const items1 = clusters[k1];
+      const items2 = clusters[k2];
+      const minW1 = Math.min(...items1.map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+      const minW2 = Math.min(...items2.map(s => TIER_WEIGHTS[s.tier_folder] || 99));
+
+      // 1. SSS Subfolders are highest priority (top of banner)
+      const isSub1 = k1.startsWith('1_SUB');
+      const isSub2 = k2.startsWith('1_SUB');
+      if (isSub1 && !isSub2) return -1;
+      if (!isSub1 && isSub2) return 1;
+      if (isSub1 && isSub2) return k1.localeCompare(k2);
+
+      // 2. Minimum tier weight (heroes with SSS first, then SS, then S+, etc.)
+      if (minW1 !== minW2) return minW1 - minW2;
+
+      // 3. If tier tied, prioritize Hero clusters with more skins
+      const isHero1 = k1.startsWith('2_HERO');
+      const isHero2 = k2.startsWith('2_HERO');
+      if (isHero1 && !isHero2) return -1;
+      if (!isHero1 && isHero2) return 1;
+      if (isHero1 && isHero2) {
+        if (items2.length !== items1.length) return items2.length - items1.length;
+        return k1.localeCompare(k2);
+      }
+
+      // 4. Then Themes
+      const isTheme1 = k1.startsWith('3_THEME');
+      const isTheme2 = k2.startsWith('3_THEME');
+      if (isTheme1 && !isTheme2) return -1;
+      if (!isTheme1 && isTheme2) return 1;
+
+      return k1.localeCompare(k2);
+    });
+
+    const finalResult = [];
+    sortedKeys.forEach(k => {
+      finalResult.push(...clusters[k]);
+    });
+    return finalResult;
+  }
+
   function arrangeSkinsToBanner() {
     if (state.bannerRowsMode === 'auto') {
       const needed = computeNeededRows();
@@ -1785,13 +2010,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all selected skin objects
     const selectedList = skins.filter(s => state.selectedSkins.has(s.id));
 
-    // Sort by tier weight (VIP at top, Seasons at bottom, A at bottom)
-    selectedList.sort((a, b) => {
-      const wa = TIER_WEIGHTS[a.tier_folder] || 99;
-      const wb = TIER_WEIGHTS[b.tier_folder] || 99;
-      if (wa !== wb) return wa - wb;
-      return a.hero.localeCompare(b.hero);
-    });
+    // Sort using smart clustering rules (or user-chosen sort mode)
+    const sortedList = clusterAndSortSkins(selectedList, state.sortMode || 'smart');
 
     // Populate empty non-crop slots with sorted skins
     let skinIdx = 0;
@@ -1815,9 +2035,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (slot.row === 1 && slot.col === 2) return;
       }
 
-      if (skinIdx < selectedList.length) {
+      if (skinIdx < sortedList.length) {
         slot.type = 'skin';
-        slot.skin = selectedList[skinIdx];
+        slot.skin = sortedList[skinIdx];
         skinIdx++;
       } else {
         slot.type = 'empty';
@@ -2124,7 +2344,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Export via Python Pillow Backend (`POST /api/export-banner`)
-  document.getElementById('btn-export-pil')?.addEventListener('click', async () => {
+  document.getElementById('btn-export-pil').addEventListener('click', async () => {
     loadingText.textContent = "Python Server đang render ảnh ghép 4K...";
     loadingOverlay.classList.remove('hidden');
 

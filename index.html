@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bộ Ghép Banner Thông Tin & Kho Trang Phục Liên Quân Mobile</title>
-  <link rel="stylesheet" href="./lib/cropper.min.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="/lib/cropper.min.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -100,7 +100,7 @@
               <div class="stats-auto-form">
                 <div class="stat-input-group">
                   <div class="stat-icon-preview">
-                    <img src="./img/tuong.png" alt="Tướng" width="38" height="38">
+                    <img src="/img/tuong.png" alt="Tướng" width="38" height="38">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-hero-count">Số Tướng:</label>
@@ -110,7 +110,7 @@
 
                 <div class="stat-input-group">
                   <div class="stat-icon-preview">
-                    <img src="./img/trang%20phuc.png" alt="Trang Phục" width="38" height="38">
+                    <img src="/img/trang%20phuc.png" alt="Trang Phục" width="38" height="38">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-skin-count">Số Trang Phục (Skin):</label>
@@ -131,7 +131,7 @@
               <div class="stats-resource-grid">
                 <div class="stat-input-group stat-group-compact">
                   <div class="stat-icon-preview">
-                    <img src="./img/quan_huy.png" alt="Quân Huy" width="34" height="34">
+                    <img src="/img/quan_huy.png" alt="Quân Huy" width="34" height="34">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-quan-huy">1. Quân Huy:</label>
@@ -141,7 +141,7 @@
 
                 <div class="stat-input-group stat-group-compact">
                   <div class="stat-icon-preview">
-                    <img src="./img/the_doi_ten.png" alt="Thẻ Đổi Tên" width="34" height="34">
+                    <img src="/img/the_doi_ten.png" alt="Thẻ Đổi Tên" width="34" height="34">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-the-doi-ten">2. Thẻ Đổi Tên:</label>
@@ -151,7 +151,7 @@
 
                 <div class="stat-input-group stat-group-compact">
                   <div class="stat-icon-preview">
-                    <img src="./img/vang.png" alt="Vàng" width="34" height="34">
+                    <img src="/img/vang.png" alt="Vàng" width="34" height="34">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-vang">3. Vàng:</label>
@@ -161,7 +161,7 @@
 
                 <div class="stat-input-group stat-group-compact">
                   <div class="stat-icon-preview">
-                    <img src="./img/ruby.png" alt="Ruby" width="34" height="34">
+                    <img src="/img/ruby.png" alt="Ruby" width="34" height="34">
                   </div>
                   <div class="stat-input-body">
                     <label for="auto-ruby">4. Ruby:</label>
@@ -374,13 +374,24 @@
               <button class="btn btn-small btn-secondary btn-zoom" data-zoom="195">130%</button>
               <button class="btn btn-small btn-secondary btn-zoom" data-zoom="230">Full HD (230px)</button>
             </div>
-            <button id="btn-sort-hierarchy" class="btn btn-secondary">
-              ⚡ Sắp Xếp Chuẩn Theo Bậc
+            <div class="sort-mode-selector">
+              <label for="sort-mode-style">Gom nhóm:</label>
+              <select id="sort-mode-style" class="select-input">
+                <option value="smart" selected>🌟 Gom Cặp Thông Minh (Folder SSS + Cùng Tướng + Cùng Bộ)</option>
+                <option value="hero">🦸 Gom Toàn Bộ Theo Tướng (Nakroth, Airi... cạnh nhau)</option>
+                <option value="theme">🎬 Gom Theo Bộ Sưu Tập (Collab, Thứ Nguyên, Anime...)</option>
+                <option value="tier">💎 Sắp Xếp Thuần Theo Bậc (SSS ➔ SS ➔ S+ ➔ S ➔ A)</option>
+              </select>
+            </div>
+            <button id="btn-sort-hierarchy" class="btn btn-secondary" title="Sắp xếp lại vị trí toàn bộ skin theo quy luật gom nhóm đã chọn">
+              ⚡ Sắp Xếp Lại
             </button>
             <button id="btn-export-canvas" class="btn btn-primary glow-btn">
               📸 Tải Ảnh Về Máy (PNG Nét Cao)
             </button>
-            
+            <button id="btn-export-pil" class="btn btn-accent" title="Xuất bằng Python Pillow 4K siêu sắc nét">
+              🖥️ Xuất Bằng Python Server
+            </button>
           </div>
         </div>
 
@@ -580,7 +591,7 @@ Allain Hắc kiếm sĩ Kirito..."></textarea>
   </div>
 
   <!-- Scripts -->
-  <script src="./lib/cropper.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="/lib/cropper.min.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>
