@@ -20,7 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     profileLayout: 'big_2x2', // Default: 'big_2x2' | 'standard' | 'wide_2x1'
     sortMode: 'smart',        // Default: 'smart' | 'hero' | 'theme' | 'tier'
     zoomCardW: 160,           // Preview zoom width (120, 160, 195, 230)
-    activeTab: 'tab-crop'
+    activeTab: 'tab-crop',
+    excludeTiers: {
+      a: false,
+      rank: false,
+      s: false,
+      ssm: false,
+      splus: false
+    }
   };
 
   // DOM Elements
@@ -46,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stepTabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-tab') === tabId));
     tabPanes.forEach(p => p.classList.toggle('active', p.id === tabId));
     if (tabId === 'tab-banner') {
+      arrangeSkinsToBanner();
       renderBannerGrid();
     }
   }
@@ -1650,12 +1658,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return maxRow + 1;
   }
 
-  // Calculate needed rows based on number of selected skins
-  function computeNeededRows() {
+  // Calculate needed rows based on number of selected skins (or displayed skins)
+  function computeNeededRows(customCount) {
     if (state.bannerRowsMode !== 'auto') {
       return state.bannerRowsFixed || 6;
     }
-    const n = state.selectedSkins.size;
+    const n = customCount !== undefined ? customCount : state.selectedSkins.size;
     let baseSlots = 24; // in big_2x2 (12 in row 0 + 12 in row 1)
     if (state.profileLayout === 'wide_2x1' || state.profileLayout === 'standard') {
       baseSlots = 26;
@@ -1715,6 +1723,27 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-sort-hierarchy').addEventListener('click', () => {
     arrangeSkinsToBanner();
     renderBannerGrid();
+  });
+
+  // Exclude Tier Filter Toggles with Smart Auto-Fill Last Row
+  const excludeCheckboxes = [
+    { id: 'chk-exclude-a', key: 'a' },
+    { id: 'chk-exclude-rank', key: 'rank' },
+    { id: 'chk-exclude-s', key: 's' },
+    { id: 'chk-exclude-ssm', key: 'ssm' },
+    { id: 'chk-exclude-splus', key: 'splus' }
+  ];
+
+  excludeCheckboxes.forEach(({ id, key }) => {
+    const chk = document.getElementById(id);
+    if (chk) {
+      chk.addEventListener('change', () => {
+        state.excludeTiers[key] = chk.checked;
+        const chip = chk.closest('.exclude-chip');
+        if (chip) chip.classList.toggle('active', chk.checked);
+        arrangeSkinsToBanner();
+      });
+    }
   });
 
   function buildInitialBannerSlots(preserveCrops = true) {
@@ -1819,15 +1848,74 @@ document.addEventListener('DOMContentLoaded', () => {
     '7_Bậc Mystic': 2.6,
     '11_Sự Kiện Đặc Biệt': 2.7,
     '3_Bậc S+': 3,
-    '8_Sổ Sứ Mệnh': 3.1, // S+ = Sổ Sứ Mệnh (Xếp cùng nhóm Bậc S+)
-    '4_Bậc S': 4,
-    '12_Hữu Hạn': 4.5,
-    '9_Thưởng Hạng': 5,
-    '12_A': 6,
-    '5_Bậc A': 6,
-    '13_Bậc Thường': 7,
-    '6_Bậc EVO': 8
+    '6_Bậc EVO': 4,
+    '8_Sổ Sứ Mệnh': 5,
+    '4_Bậc S': 6,
+    '12_Hữu Hạn': 6.5,
+    '9_Thưởng Hạng': 7,
+    '12_A': 8,
+    '5_Bậc A': 8,
+    '13_Bậc Thường': 9
   };
+
+  // Get priority within tier folder (ưu tiên 1 -> 2 -> 3 -> root -> _backup_original)
+  function getFolderPriority(skin) {
+    if (skin && skin.priority != null) return skin.priority;
+    const sub = (skin && skin.subfolder) || '';
+    if (!sub) return 999;
+    if (sub === '_backup_original') return 9999;
+    const m = sub.match(/ưu\s*tiên\s*(\d+)/i) || sub.match(/uu\s*tien\s*(\d+)/i);
+    if (m) return parseInt(m[1], 10);
+    if (/ưu\s*tiên/i.test(sub) || /uu\s*tien/i.test(sub)) return 0.5;
+    return 900;
+  }
+
+  function isSkinTierExcluded(skin) {
+    if (!skin) return false;
+    const tf = skin.tier_folder || '';
+    if (state.excludeTiers.a && (tf.startsWith('12_A') || tf.startsWith('5_Bậc A') || tf.startsWith('13_Bậc Thường'))) return true;
+    if (state.excludeTiers.rank && tf.startsWith('9_Thưởng Hạng')) return true;
+    if (state.excludeTiers.s && (tf.startsWith('4_Bậc S') || tf.startsWith('12_Hữu Hạn'))) return true;
+    if (state.excludeTiers.ssm && tf.startsWith('8_Sổ Sứ Mệnh')) return true;
+    if (state.excludeTiers.splus && tf.startsWith('3_Bậc S+')) return true;
+    return false;
+  }
+
+  function isReservedProfileSlot(slot) {
+    if (state.profileLayout === 'big_2x2') {
+      return (slot.row === 0 && slot.col === 0) ||
+             (slot.row === 0 && slot.col === 2) ||
+             (slot.row === 1 && slot.col === 2);
+    }
+    if (state.profileLayout === 'standard') {
+      return (slot.row === 0 && slot.col === 0) ||
+             (slot.row === 0 && slot.col === 1) ||
+             (slot.row === 1 && slot.col === 1);
+    }
+    if (state.profileLayout === 'wide_2x1') {
+      return (slot.row === 0 && slot.col === 0) ||
+             (slot.row === 1 && slot.col === 0) ||
+             (slot.row === 0 && slot.col === 2) ||
+             (slot.row === 1 && slot.col === 2);
+    }
+    return false;
+  }
+
+  function getRowSkinCapacity(r) {
+    if (r >= 2) return state.bannerCols || 15;
+    if (state.profileLayout === 'standard') {
+      return r === 0 ? 13 : 14;
+    }
+    return 12; // big_2x2 and wide_2x1 have 12 skin slots in rows 0 and 1
+  }
+
+  function getCumulativeSkinCapacity(R) {
+    let total = 0;
+    for (let r = 0; r <= R; r++) {
+      total += getRowSkinCapacity(r);
+    }
+    return total;
+  }
 
   // Detect anime collab / theme collection
   function detectSkinTheme(skin) {
@@ -1859,12 +1947,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function clusterAndSortSkins(skinList, mode = 'smart') {
     if (!skinList || skinList.length === 0) return [];
 
-    // Mode 1: Pure tier sort
+    // Mode 1: Pure tier sort (Bậc cao -> thấp, subfolder ưu tiên 1 -> 2 -> 3 -> root)
     if (mode === 'tier') {
       return [...skinList].sort((a, b) => {
         const wa = TIER_WEIGHTS[a.tier_folder] || 99;
         const wb = TIER_WEIGHTS[b.tier_folder] || 99;
         if (wa !== wb) return wa - wb;
+        const pa = getFolderPriority(a);
+        const pb = getFolderPriority(b);
+        if (pa !== pb) return pa - pb;
         return a.hero.localeCompare(b.hero) || a.skin_name.localeCompare(b.skin_name);
       });
     }
@@ -1877,12 +1968,23 @@ document.addEventListener('DOMContentLoaded', () => {
         heroGroups[s.hero].push(s);
       });
       Object.keys(heroGroups).forEach(h => {
-        heroGroups[h].sort((a, b) => (TIER_WEIGHTS[a.tier_folder] || 99) - (TIER_WEIGHTS[b.tier_folder] || 99));
+        heroGroups[h].sort((a, b) => {
+          const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+          const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+          if (wa !== wb) return wa - wb;
+          const pa = getFolderPriority(a);
+          const pb = getFolderPriority(b);
+          if (pa !== pb) return pa - pb;
+          return a.skin_name.localeCompare(b.skin_name);
+        });
       });
       const sortedHeroes = Object.keys(heroGroups).sort((h1, h2) => {
         const minW1 = Math.min(...heroGroups[h1].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
         const minW2 = Math.min(...heroGroups[h2].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
         if (minW1 !== minW2) return minW1 - minW2;
+        const minP1 = Math.min(...heroGroups[h1].map(s => getFolderPriority(s)));
+        const minP2 = Math.min(...heroGroups[h2].map(s => getFolderPriority(s)));
+        if (minP1 !== minP2) return minP1 - minP2;
         if (heroGroups[h2].length !== heroGroups[h1].length) return heroGroups[h2].length - heroGroups[h1].length;
         return h1.localeCompare(h2);
       });
@@ -1900,12 +2002,23 @@ document.addEventListener('DOMContentLoaded', () => {
         themeGroups[t].push(s);
       });
       Object.keys(themeGroups).forEach(t => {
-        themeGroups[t].sort((a, b) => (TIER_WEIGHTS[a.tier_folder] || 99) - (TIER_WEIGHTS[b.tier_folder] || 99));
+        themeGroups[t].sort((a, b) => {
+          const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+          const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+          if (wa !== wb) return wa - wb;
+          const pa = getFolderPriority(a);
+          const pb = getFolderPriority(b);
+          if (pa !== pb) return pa - pb;
+          return a.skin_name.localeCompare(b.skin_name);
+        });
       });
       const sortedThemes = Object.keys(themeGroups).sort((t1, t2) => {
         const minW1 = Math.min(...themeGroups[t1].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
         const minW2 = Math.min(...themeGroups[t2].map(s => TIER_WEIGHTS[s.tier_folder] || 99));
         if (minW1 !== minW2) return minW1 - minW2;
+        const minP1 = Math.min(...themeGroups[t1].map(s => getFolderPriority(s)));
+        const minP2 = Math.min(...themeGroups[t2].map(s => getFolderPriority(s)));
+        if (minP1 !== minP2) return minP1 - minP2;
         return t1.localeCompare(t2);
       });
       const res = [];
@@ -1914,12 +2027,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Mode 4: SMART GROUPING (DEFAULT)
-    // 1. SSS Subfolders (New folder, New folder (3)...) - Highest priority, placed right at top
+    // 1. SSS Subfolders (ưu tiên 1 -> 2 -> 3) - Highest priority, placed right at top
     // 2. Dedicated Hero Subfolder - Other skins of the same hero join right next to them
     // 3. Multi-skin Heroes (Nakroth, Airi, Tulen, Murad...) - Placed together
     // 4. Multi-skin Collab/Anime Themes - Placed together
     // 5. Standalone skins by tier
-
     const heroCounts = {};
     const themeCounts = {};
     const sssSubHeroes = {};
@@ -1957,7 +2069,8 @@ document.addEventListener('DOMContentLoaded', () => {
         key = `3_THEME::${t}`;
       } else {
         const w = TIER_WEIGHTS[tf] || 99;
-        key = `4_STANDALONE::${w.toFixed(1)}::${h}::${s.id}`;
+        const p = getFolderPriority(s);
+        key = `4_STANDALONE::${w.toFixed(1)}::${p}::${h}::${s.id}`;
       }
 
       clusters[key] = clusters[key] || [];
@@ -1968,7 +2081,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(clusters).forEach(key => {
       const items = clusters[key];
       if (key.startsWith('1_SUB')) {
-        // In SSS subfolder: subfolder skins first, then additional hero skins, sorted by tier
+        // In SSS subfolder: subfolder skins first, then additional hero skins, sorted by tier and folder priority
         items.sort((a, b) => {
           const aInSub = a.tier_folder.startsWith('1_') && a.subfolder ? 0 : 1;
           const bInSub = b.tier_folder.startsWith('1_') && b.subfolder ? 0 : 1;
@@ -1976,14 +2089,20 @@ document.addEventListener('DOMContentLoaded', () => {
           const wa = TIER_WEIGHTS[a.tier_folder] || 99;
           const wb = TIER_WEIGHTS[b.tier_folder] || 99;
           if (wa !== wb) return wa - wb;
+          const pa = getFolderPriority(a);
+          const pb = getFolderPriority(b);
+          if (pa !== pb) return pa - pb;
           return a.skin_name.localeCompare(b.skin_name);
         });
       } else if (key.startsWith('2_HERO')) {
-        // Inside hero cluster: sort by tier weight (VIP first: SSS -> SS -> S+ -> S -> EVO -> A)
+        // Inside hero cluster: sort by tier weight & priority (VIP first: SSS -> SS -> S+ -> EVO -> SSM -> S -> Thưởng Hạng -> A)
         items.sort((a, b) => {
           const wa = TIER_WEIGHTS[a.tier_folder] || 99;
           const wb = TIER_WEIGHTS[b.tier_folder] || 99;
           if (wa !== wb) return wa - wb;
+          const pa = getFolderPriority(a);
+          const pb = getFolderPriority(b);
+          if (pa !== pb) return pa - pb;
           return a.skin_name.localeCompare(b.skin_name);
         });
       } else if (key.startsWith('3_THEME')) {
@@ -1991,6 +2110,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const wa = TIER_WEIGHTS[a.tier_folder] || 99;
           const wb = TIER_WEIGHTS[b.tier_folder] || 99;
           if (wa !== wb) return wa - wb;
+          const pa = getFolderPriority(a);
+          const pb = getFolderPriority(b);
+          if (pa !== pb) return pa - pb;
           return a.hero.localeCompare(b.hero);
         });
       }
@@ -2008,10 +2130,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSub2 = k2.startsWith('1_SUB');
       if (isSub1 && !isSub2) return -1;
       if (!isSub1 && isSub2) return 1;
-      if (isSub1 && isSub2) return k1.localeCompare(k2);
+      if (isSub1 && isSub2) {
+        const p1 = Math.min(...items1.map(s => getFolderPriority(s)));
+        const p2 = Math.min(...items2.map(s => getFolderPriority(s)));
+        if (p1 !== p2) return p1 - p2;
+        return k1.localeCompare(k2);
+      }
 
       // 2. Minimum tier weight (heroes with SSS first, then SS, then S+, etc.)
       if (minW1 !== minW2) return minW1 - minW2;
+
+      // 2.1 Minimum folder priority (ưu tiên 1 -> 2 -> 3 -> root)
+      const minP1 = Math.min(...items1.map(s => getFolderPriority(s)));
+      const minP2 = Math.min(...items2.map(s => getFolderPriority(s)));
+      if (minP1 !== minP2) return minP1 - minP2;
 
       // 3. If tier tied, prioritize Hero clusters with more skins
       const isHero1 = k1.startsWith('2_HERO');
@@ -2040,46 +2172,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function arrangeSkinsToBanner() {
+    const { skins } = state.catalog;
+    // Get all selected skin objects
+    const selectedList = skins.filter(s => state.selectedSkins.has(s.id));
+
+    const isAnyExcludeActive = Object.values(state.excludeTiers).some(Boolean);
+
+    let finalSkinsToPlace = [];
+
+    if (!isAnyExcludeActive) {
+      finalSkinsToPlace = clusterAndSortSkins(selectedList, state.sortMode || 'smart');
+    } else {
+      const keptList = [];
+      const excludedList = [];
+      selectedList.forEach(s => {
+        if (isSkinTierExcluded(s)) {
+          excludedList.push(s);
+        } else {
+          keptList.push(s);
+        }
+      });
+
+      const sortedKeptList = clusterAndSortSkins(keptList, state.sortMode || 'smart');
+
+      // Sort excluded skins strictly by tier hierarchy & folder priority
+      // (S+ -> EVO -> Sổ Sứ Mệnh -> S -> Thưởng Hạng -> A)
+      excludedList.sort((a, b) => {
+        const wa = TIER_WEIGHTS[a.tier_folder] || 99;
+        const wb = TIER_WEIGHTS[b.tier_folder] || 99;
+        if (wa !== wb) return wa - wb;
+        const pa = getFolderPriority(a);
+        const pb = getFolderPriority(b);
+        if (pa !== pb) return pa - pb;
+        return a.hero.localeCompare(b.hero) || a.skin_name.localeCompare(b.skin_name);
+      });
+
+      const K = sortedKeptList.length;
+      let targetRow = 1; // at least 2 rows (row 0 and row 1)
+      if (state.bannerRowsMode === 'fixed') {
+        targetRow = Math.max(1, state.bannerRowsFixed - 1);
+      } else {
+        targetRow = 1;
+        while (getCumulativeSkinCapacity(targetRow) < K) {
+          targetRow++;
+        }
+      }
+
+      const cumCap = getCumulativeSkinCapacity(targetRow);
+      const neededSlots = Math.max(0, cumCap - K);
+      const fillSkins = excludedList.slice(0, neededSlots);
+      finalSkinsToPlace = [...sortedKeptList, ...fillSkins];
+    }
+
     if (state.bannerRowsMode === 'auto') {
-      const needed = computeNeededRows();
+      const needed = computeNeededRows(finalSkinsToPlace.length);
       if (needed !== state.bannerRows) {
         state.bannerRows = needed;
         buildInitialBannerSlots(true);
       }
     }
 
-    const { skins } = state.catalog;
-    // Get all selected skin objects
-    const selectedList = skins.filter(s => state.selectedSkins.has(s.id));
-
-    // Sort using smart clustering rules (or user-chosen sort mode)
-    const sortedList = clusterAndSortSkins(selectedList, state.sortMode || 'smart');
-
-    // Populate empty non-crop slots with sorted skins
+    // Populate empty non-crop, non-profile slots with final skins
     let skinIdx = 0;
     state.bannerSlots.forEach(slot => {
       // Don't overwrite slots that have cropped profile images or generated cards
       if (slot.type === 'crop') return;
+      if (isReservedProfileSlot(slot)) return;
 
-      // In big_2x2 mode: reserve (0,0) [Khối 2x2], (0,2) [Cạnh 2x2 - Trên], (1,2) [Cạnh 2x2 - Dưới]
-      if (state.profileLayout === 'big_2x2') {
-        if (slot.row === 0 && slot.col === 0) return;
-        if (slot.row === 0 && slot.col === 2) return;
-        if (slot.row === 1 && slot.col === 2) return;
-      } else if (state.profileLayout === 'standard') {
-        if (slot.row === 0 && slot.col === 0) return;
-        if (slot.row === 0 && slot.col === 1) return;
-        if (slot.row === 1 && slot.col === 1) return;
-      } else if (state.profileLayout === 'wide_2x1') {
-        if (slot.row === 0 && slot.col === 0) return;
-        if (slot.row === 1 && slot.col === 0) return;
-        if (slot.row === 0 && slot.col === 2) return;
-        if (slot.row === 1 && slot.col === 2) return;
-      }
-
-      if (skinIdx < sortedList.length) {
+      if (skinIdx < finalSkinsToPlace.length) {
         slot.type = 'skin';
-        slot.skin = sortedList[skinIdx];
+        slot.skin = finalSkinsToPlace[skinIdx];
         skinIdx++;
       } else {
         slot.type = 'empty';

@@ -1319,6 +1319,64 @@ body {
   line-height: 1.4;
 }
 
+.banner-exclude-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 14px;
+  background: rgba(9, 18, 40, 0.85);
+  border: 1px solid #1c356e;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.exclude-bar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #70a1ff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.exclude-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #0d1b3e;
+  border: 1px solid #1c356e;
+  padding: 4px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #c0d4f8;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.exclude-chip:hover {
+  border-color: #00d2ff;
+  color: #ffffff;
+  background: #142858;
+}
+
+.exclude-chip input[type="checkbox"] {
+  accent-color: #ff4757;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+.exclude-chip.active {
+  background: rgba(255, 71, 87, 0.15);
+  border-color: #ff4757;
+  color: #ff6b81;
+  font-weight: 600;
+}
+
 .banner-slot-placeholder {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);

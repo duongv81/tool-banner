@@ -380,7 +380,7 @@
                 <option value="smart" selected>🌟 Gom Cặp Thông Minh (Folder SSS + Cùng Tướng + Cùng Bộ)</option>
                 <option value="hero">🦸 Gom Toàn Bộ Theo Tướng (Nakroth, Airi... cạnh nhau)</option>
                 <option value="theme">🎬 Gom Theo Bộ Sưu Tập (Collab, Thứ Nguyên, Anime...)</option>
-                <option value="tier">💎 Sắp Xếp Thuần Theo Bậc (SSS ➔ SS ➔ S+ ➔ S ➔ A)</option>
+                <option value="tier">💎 Sắp Xếp Thuần Theo Bậc (SSS ➔ SS ➔ S+ ➔ EVO ➔ SSM ➔ S ➔ Thưởng Hạng ➔ A)</option>
               </select>
             </div>
             <button id="btn-sort-hierarchy" class="btn btn-secondary" title="Sắp xếp lại vị trí toàn bộ skin theo quy luật gom nhóm đã chọn">
@@ -392,6 +392,31 @@
             <button id="btn-export-pil" class="btn btn-accent" title="Xuất bằng Python Pillow 4K siêu sắc nét">
               🖥️ Xuất Bằng Python Server
             </button>
+          </div>
+
+          <!-- Thanh Lọc / Bỏ Bậc (Tự Động Lấp Đầy Hàng Cuối) -->
+          <div class="banner-exclude-bar">
+            <span class="exclude-bar-title">🚫 Lọc Bỏ Bậc (Tự lấp đầy hàng cuối):</span>
+            <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc A, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
+              <input type="checkbox" id="chk-exclude-a">
+              <span>Bỏ Bậc A</span>
+            </label>
+            <label class="exclude-chip" title="Bỏ toàn bộ skin Thưởng Hạng, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
+              <input type="checkbox" id="chk-exclude-rank">
+              <span>Bỏ Thưởng Hạng</span>
+            </label>
+            <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc S, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
+              <input type="checkbox" id="chk-exclude-s">
+              <span>Bỏ Bậc S</span>
+            </label>
+            <label class="exclude-chip" title="Bỏ toàn bộ skin Sổ Sứ Mệnh, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
+              <input type="checkbox" id="chk-exclude-ssm">
+              <span>Bỏ Sổ Sứ Mệnh</span>
+            </label>
+            <label class="exclude-chip" title="Bỏ toàn bộ skin Bậc S+, chỉ giữ lại vừa đủ để lấp đầy hàng cuối">
+              <input type="checkbox" id="chk-exclude-splus">
+              <span>Bỏ Bậc S+</span>
+            </label>
           </div>
         </div>
 
