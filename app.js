@@ -1361,12 +1361,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sort heroes by length desc so "Ngộ Không" matches before "Ngộ"
     const sortedHeroes = [...allHeroes].sort((a, b) => b.name.length - a.name.length);
+
+    // Ưu tiên 1: Tên tướng nằm ngay đầu dòng (ví dụ "Alice The Butterfly Mansion Girl" -> tướng là Alice)
     for (const h of sortedHeroes) {
       const ch = cleanSearchText(h.name);
-      if (ch && cleanLine.includes(ch)) {
+      if (ch && (cleanLine === ch || cleanLine.startsWith(ch + ' '))) {
         detectedHero = h.name;
-        remainingQ = cleanSearchText(cleanLine.replace(ch, ' '));
+        remainingQ = cleanSearchText(cleanLine.substring(ch.length));
         break;
+      }
+    }
+
+    // Ưu tiên 2: Tên tướng nằm ở vị trí bất kỳ
+    if (!detectedHero) {
+      for (const h of sortedHeroes) {
+        const ch = cleanSearchText(h.name);
+        if (ch && cleanLine.includes(ch)) {
+          detectedHero = h.name;
+          remainingQ = cleanSearchText(cleanLine.replace(ch, ' '));
+          break;
+        }
       }
     }
 
